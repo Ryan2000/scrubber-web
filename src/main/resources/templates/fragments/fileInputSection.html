@@ -1,0 +1,93 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<script type="application/javascript">
+		$(document).ready(function(){
+            //Select the form by using the id
+            
+        $('#fileUploadForm').submit(function(e){ //react to form and submit element using form id. see line 12
+             									// event object (e)
+            e.preventDefault();				   // we don't want a full page submit. So need to turn off default submit
+            
+            
+            //Now we need our security tokens. They are specified in the
+            //meta section in scrubber.html
+            var token = $("meta[name='_csrf']").attr('content');
+            var header = $("meta[name='_csrf_header']").attr('content');
+            
+            
+            alert(token);
+            alert(header);
+            
+            //Now send those tokens to the server first
+            $.ajaxSetup({
+                beforeSend: function(xhr, settings){
+                    xhr.setRequestHeader(header, token);
+                }
+            });
+            
+            //Now get the bytes of the uploaded files
+            var formData = new FormData($(this)[0]);
+            
+            //Now, we send our ajax request
+            //This is the long hand ajax, but we need it for multipart-requests
+            $.ajax({
+                url: $(this).attr('action'),  //referencing our form
+                type: 'POST',         //type of request - ours is post
+                data: formData,       //JQuery documentation
+                async: false,         //JQuery documentation
+                cache: false,         //JQuery documentation
+                contentType: false,   //JQuery documentation
+                processData: false,   //JQuery documentation
+                success: function(returnData){  //function called after Ajax completes successfully
+                    //We will load our html from the server here when we
+                    //get to that point
+                    
+                    //First argument is the message, and the second is how long you
+                    //want to show the message in milliseconds (so 4000 is 4 seconds)
+                    Materialize.toast('Successfully processed CSV Files', 4000);  //shows notification that our function is complete
+                }
+             });
+          });    
+        });
+    </script>
+
+
+    <!-- This is the name that thymeleaf will use to identify this fragment -->
+    <div th:fragment="fileInputSection">
+    	<form id="fileUploadForm" method="POST" enctype="multipart/form-data" th:action="@{/scrubber}">
+    	<!--enctype="multipart/form-data" - bc sending files to server.  tells browser we will be making mulitple requests to send the file.-->
+    	<!-- th:action  will match to a method in our java code-->
+    		<h4>Please select two CSV files</h4>
+    		<div class="row">
+                <div class="col s5 file-field input-field">
+                    <div class="btn">
+                        <span>File</span>
+                        <!-- File upload control -->
+                        <input type="file" name="firstFile" />
+                    </div>
+                    <div class="file-path-wrapper">
+                        <!--Text box -->
+                        <input class="file-path validate" type="text" />
+                    </div>
+                </div>
+                
+                <div class="col s5 file-field input-field">
+                    <div class="btn">
+                        <span>File</span>
+                        <!-- File upload control -->
+                        <input type="file" name="secondFile" />
+                    </div>
+                    <div class="file-path-wrapper">
+                        <!-- Textbox -->
+                        <input class="file-path validate" type="text" />
+                    </div>
+                </div>
+                
+                <div class="col s2 upload-offset">
+                    <!-- Submit button -->
+                    <input type="submit" value="Upload Files" />
+                </div>
+            </div>
+         </form>
+    </div>     
+</html>

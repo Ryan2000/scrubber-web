@@ -1,0 +1,45 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="fileInputSection">
+    <form id="fileUploadForm" method="POST" enctype="multipart/form-data" th:action="@{/}" th:object="${fileUploadModel}">
+        <h4>Please select two CSV files</h4>
+        <div>
+        	 <!-- th:if Here -->
+            <div th:if="${#fields.errors('galpinName')}">
+                <ul>
+                    <li th:each="err : ${#fields.errors('galpinName')}"
+                        th:text="${err}">Input is incorrect</li>
+                </ul>
+            </div>
+            <div class="file-field input-field">
+                <div class="btn">
+                    <span>Galpin</span>
+                    <input  type="file" th:field="*{galpin}"/>
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text" th:field="*{galpinName}" />
+                </div>
+            </div>
+        </div>
+        <div>
+            <div th:if="${#fields.errors('unsoldName')}">
+                <ul>
+                    <li th:each="err : ${#fields.errors('unsoldName')}"
+                        th:text="${err}">Input is incorrect</li>
+                </ul>
+            </div>
+            <div class="file-field input-field">
+                <div class="btn">
+                    <span>Unsold</span>
+                    <input type="file" th:field="*{unsold}"/>
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text" th:field="*{unsoldName}"/>
+                </div>
+            </div>
+        </div>
+        <div>
+            <input class="center waves-effect waves-light btn" type="submit" value="Upload Files" />
+        </div>
+    </form>
+</div>
+</html>

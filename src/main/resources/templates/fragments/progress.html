@@ -1,0 +1,19 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<div th:fragment="progress">
+    <h3>Scrubbing! Please wait...</h3>
+    <div class="progress">
+    	<!-- ${progress} variable will come from the controller and is -->
+        <!-- calculated using ScrubberService::calcPercentComplete -->
+        <div class="determinate" th:style="'width: ' + ${progress} + '%'"></div>
+    </div>
+
+    <input type="text" class="progressTxt invisible" th:value="${progress}"/>
+</div>
+
+</body>
+
+</html>
