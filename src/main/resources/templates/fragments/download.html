@@ -1,0 +1,33 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+      
+      <!--This fragment has 3 links -->
+      <!--Those links will point to mapped methods in the ScrubController class -->
+      <!--  anytime the browser encounters a link to a file, it will download it if it's not an HTML file -->
+      <!-- that's why we can link directly -->
+
+<body>
+
+<div th:fragment="download">
+    <div>
+        <h3>Click to download direct marketing file</h3>
+        <!--Maps to ScrubController::downloadDirect -->
+        <a href="/scrub/direct.download" class="waves-effect waves-light btn">Direct Marketing</a>
+    </div>
+
+    <div>
+        <h3>Click to download database marketing file</h3>
+         <!-- Maps to ScrubController::downloadDatabase -->
+        <a href="/scrub/database.download" class="waves-effect waves-light btn">Database Marketing</a>
+    </div>
+
+    <div>
+        <h3>Click to download scrubbing log</h3>
+        <!-- Maps to ScrubContoller::downloadLog -->
+        <a href="/scrub/log.download" class="waves-effect waves-light btn">Scrubbing Log</a>
+    </div>
+</div>
+
+</body>
+
+</html>

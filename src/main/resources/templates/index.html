@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta th:name="_csrf" th:content="${_csrf.token}" />
+    <meta th:name="_csrf_header" th:content="${_csrf.headerName}" />
+
+    <title>Scrubber</title>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css"/>
+
+    <script
+            src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+
+</head>
+<body>
+
+<ul class="collapsible" data-collapsible="accordion">
+    <li>
+        <div class="collapsible-header"><i class="material-icons">filter_drama</i>Input Files</div>
+        <div>
+            <form id="fileUploadForm" method="POST" enctype="multipart/form-data" th:action="@{/}" th:object="${fileUploadModel}">
+                <h4>Please select two CSV files</h4>
+                <div>
+                    <div th:if="${#fields.errors('galpinName')}">
+                        <ul>
+                            <li th:each="err : ${#fields.errors('galpinName')}"
+                                th:text="${err}">Input is incorrect</li>
+                        </ul>
+                    </div>
+                    <div class="file-field input-field">
+                        <div class="btn">
+                            <span>Galpin</span>
+                            <input type="file" th:field="*{galpin}"/>
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text" th:field="*{galpinName}" />
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div th:if="${#fields.errors('unsoldName')}">
+                        <ul>
+                            <li th:each="err : ${#fields.errors('unsoldName')}"
+                                th:text="${err}">Input is incorrect</li>
+                        </ul>
+                    </div>
+                    <div class="file-field input-field">
+                        <div class="btn">
+                            <span>Unsold</span>
+                            <input type="file" th:field="*{unsold}"/>
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text" th:field="*{unsoldName}"/>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <input class="center waves-effect waves-light btn" type="submit" value="Upload Files" />
+                </div>
+            </form>
+        </div>
+    </li>
+</ul>
+
+</body>
+</html>
